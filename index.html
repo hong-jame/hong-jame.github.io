@@ -21,12 +21,13 @@
       --text-mid: #4c5f70;
       --text-low: #8494a1;
       --emerald: #059e6e;
-      --emerald-soft: #0d9488;
       --blue: #0284c7;
-      --blue-soft: #0369a1;
       --radius: 20px;
       --shadow: 0 22px 45px -22px rgba(20, 50, 80, 0.30);
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      /* default accent (overridden per category) */
+      --accent: #059e6e;
+      --accent-soft: #0d9488;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,7 +51,7 @@
       background:
         radial-gradient(60% 55% at 18% 8%, rgba(16, 185, 129, 0.16), transparent 60%),
         radial-gradient(55% 50% at 88% 12%, rgba(56, 189, 248, 0.16), transparent 60%),
-        radial-gradient(70% 60% at 50% 110%, rgba(16, 185, 129, 0.10), transparent 60%);
+        radial-gradient(70% 60% at 50% 110%, rgba(217, 119, 6, 0.08), transparent 60%);
       z-index: -2;
       pointer-events: none;
     }
@@ -76,7 +77,7 @@
     }
 
     /* ---------- Header ---------- */
-    header { margin-bottom: clamp(2.4rem, 5vw, 3.6rem); }
+    header { margin-bottom: clamp(1.6rem, 4vw, 2.4rem); }
 
     .brand {
       display: inline-flex;
@@ -98,7 +99,7 @@
       display: grid; place-items: center;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--emerald), var(--blue));
-      color: #04121a;
+      color: #fff;
       font-size: 0.9rem;
     }
     .brand b { color: var(--text-hi); font-weight: 800; }
@@ -119,46 +120,91 @@
     .subtitle {
       color: var(--text-mid);
       font-size: clamp(0.98rem, 2.2vw, 1.12rem);
-      max-width: 44ch;
+      max-width: 46ch;
     }
 
-    /* ---------- Section ---------- */
-    .section { margin-top: clamp(2.6rem, 5vw, 3.6rem); }
-
-    .section-head {
+    /* ---------- Zone (상단/하단 대구분) ---------- */
+    .zone-head {
       display: flex;
       align-items: center;
-      gap: 0.85rem;
-      margin-bottom: 1.5rem;
+      gap: 0.9rem;
+      margin: clamp(2.6rem, 5vw, 3.6rem) 0 0.6rem;
+      padding-bottom: 1.1rem;
+      border-bottom: 1px solid var(--card-border);
     }
-    .section-head .tag {
-      width: 44px; height: 44px;
+    .zone-mark {
+      width: 48px; height: 48px;
       flex: none;
       display: grid; place-items: center;
-      border-radius: 13px;
-      font-size: 1.15rem;
+      border-radius: 14px;
+      color: #fff;
+      font-size: 1.3rem;
+      box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.35);
+    }
+    .zone-mark.work { background: linear-gradient(135deg, #059e6e, #0284c7); }
+    .zone-mark.life { background: linear-gradient(135deg, #0891b2, #d97706); }
+    .zone-head h2 {
+      font-size: clamp(1.45rem, 3.8vw, 1.95rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .zone-head .en {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-low);
+      margin-top: 3px;
+    }
+
+    /* ---------- Category (소구분) ---------- */
+    .cat { margin-top: clamp(1.7rem, 3.5vw, 2.2rem); }
+
+    .cat-head {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      margin-bottom: 1.15rem;
+    }
+    .cat-head .tag {
+      width: 40px; height: 40px;
+      flex: none;
+      display: grid; place-items: center;
+      border-radius: 12px;
+      font-size: 1.05rem;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 12%, transparent);
       border: 1px solid var(--card-border);
     }
-    .section-head.teacher .tag { color: var(--emerald); background: rgba(52, 211, 153, 0.1); }
-    .section-head.student .tag { color: var(--blue); background: rgba(56, 189, 248, 0.1); }
-    .section-head h2 {
-      font-size: clamp(1.15rem, 3vw, 1.4rem);
+    .cat-head h3 {
+      font-size: clamp(1.05rem, 2.6vw, 1.2rem);
       font-weight: 700;
       letter-spacing: -0.01em;
     }
-    .section-head p { color: var(--text-low); font-size: 0.86rem; margin-top: 1px; }
-    .section-head .line {
+    .cat-head .en { color: var(--text-low); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.03em; }
+    .cat-head .line {
       flex: 1;
       height: 1px;
       background: linear-gradient(90deg, var(--card-border), transparent);
     }
 
+    /* category accents */
+    .cat--emerald { --accent: #059e6e; --accent-soft: #0d9488; }
+    .cat--blue    { --accent: #0284c7; --accent-soft: #0369a1; }
+    .cat--violet  { --accent: #7c3aed; --accent-soft: #6d28d9; }
+    .cat--cyan    { --accent: #0891b2; --accent-soft: #0e7490; }
+    .cat--amber   { --accent: #d97706; --accent-soft: #b45309; }
+
     /* ---------- Grid & Cards ---------- */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(288px, 1fr));
       gap: 1.3rem;
     }
+    /* single-card categories don't stretch full width */
+    .grid--solo { grid-template-columns: minmax(288px, 380px); }
 
     .card {
       position: relative;
@@ -179,7 +225,7 @@
       position: absolute;
       top: 0; left: 0; right: 0;
       height: 2px;
-      background: linear-gradient(90deg, var(--c1), var(--c2));
+      background: linear-gradient(90deg, var(--accent), var(--accent-soft));
       transform: scaleX(0);
       transform-origin: left;
       transition: transform 0.5s var(--ease);
@@ -190,21 +236,18 @@
       position: absolute;
       top: -40%; right: -30%;
       width: 220px; height: 220px;
-      background: radial-gradient(circle, var(--glow), transparent 68%);
+      background: radial-gradient(circle, color-mix(in srgb, var(--accent) 26%, transparent), transparent 68%);
       opacity: 0;
       transition: opacity 0.5s var(--ease);
       pointer-events: none;
     }
     .card:hover {
       transform: translateY(-8px);
-      border-color: var(--card-border-hover);
+      border-color: color-mix(in srgb, var(--accent) 45%, transparent);
       box-shadow: var(--shadow);
     }
     .card:hover::before { transform: scaleX(1); }
     .card:hover::after { opacity: 0.5; }
-
-    .card--emerald { --c1: var(--emerald); --c2: var(--emerald-soft); --glow: rgba(52,211,153,0.25); --card-border-hover: rgba(52,211,153,0.45); }
-    .card--blue    { --c1: var(--blue);    --c2: var(--blue-soft);    --glow: rgba(56,189,248,0.25); --card-border-hover: rgba(56,189,248,0.45); }
 
     .card__icon {
       width: 56px; height: 56px;
@@ -212,11 +255,11 @@
       border-radius: 15px;
       font-size: 1.5rem;
       margin-bottom: 1.15rem;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 11%, transparent);
       border: 1px solid var(--card-border);
       transition: transform 0.45s var(--ease);
     }
-    .card--emerald .card__icon { color: var(--emerald); background: rgba(52,211,153,0.1); }
-    .card--blue .card__icon { color: var(--blue); background: rgba(56,189,248,0.1); }
     .card:hover .card__icon { transform: scale(1.06) rotate(-3deg); }
 
     .card__title {
@@ -248,9 +291,11 @@
       transition: background 0.3s var(--ease), border-color 0.3s var(--ease), gap 0.3s var(--ease);
     }
     .card__btn i { transition: transform 0.3s var(--ease); }
-    .card--emerald .card__btn:hover { background: rgba(52,211,153,0.13); border-color: rgba(52,211,153,0.4); }
-    .card--blue .card__btn:hover { background: rgba(56,189,248,0.13); border-color: rgba(56,189,248,0.4); }
-    .card__btn:hover { gap: 0.8rem; }
+    .card__btn:hover {
+      gap: 0.8rem;
+      background: color-mix(in srgb, var(--accent) 13%, transparent);
+      border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+    }
     .card__btn:hover i { transform: translateX(3px); }
 
     /* ---------- Footer ---------- */
@@ -287,120 +332,184 @@
       </div>
       <h1>미래 교실을 위한<br /><span class="accent">교육 통합 대시보드</span></h1>
       <p class="subtitle">
-        수업과 평가, 학생 학습을 하나로. 자주 쓰는 도구를 한 곳에 모아
-        더 스마트하게 가르치고 분석하세요.
+        대입 준비부터 학생 평가·학교 업무, 그리고 학습까지.
+        자주 쓰는 도구를 한 곳에 모아 더 스마트하게 운영하세요.
       </p>
     </header>
 
-    <!-- Category 1: Teacher Tools -->
-    <section class="section reveal" style="animation-delay:0.08s">
-      <div class="section-head teacher">
-        <span class="tag"><i class="fa-solid fa-chalkboard-user"></i></span>
+    <!-- ===================== 상단 존: 교사 업무 ===================== -->
+    <section class="reveal" style="animation-delay:0.06s">
+      <div class="zone-head">
+        <span class="zone-mark work"><i class="fa-solid fa-chalkboard-user"></i></span>
         <div>
-          <h2>교사용 업무 지원</h2>
-          <p>Teacher Tools</p>
+          <h2>교사 업무</h2>
+          <span class="en">Teacher Workspace</span>
         </div>
-        <span class="line"></span>
       </div>
 
-      <div class="grid">
-        <article class="card card--emerald">
-          <div class="card__icon"><i class="fa-solid fa-file-pen"></i></div>
-          <h3 class="card__title">대입 컨설팅 초안</h3>
-          <p class="card__desc">
-            생활기록부를 분석해 학생의 강점과 진로 방향을 뽑아냅니다.
-            대입 상담에 바로 쓸 수 있는 컨설팅 초안을 만들어 줍니다.
-          </p>
-          <a class="card__btn" href="https://hong-jame.github.io/saengibu-analyzer/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
-        </article>
+      <!-- 1. 대입 준비 -->
+      <div class="cat cat--emerald">
+        <div class="cat-head">
+          <span class="tag"><i class="fa-solid fa-graduation-cap"></i></span>
+          <h3>대입 준비 <span class="en">College Prep</span></h3>
+          <span class="line"></span>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-file-pen"></i></div>
+            <h3 class="card__title">컨설팅 초안</h3>
+            <p class="card__desc">
+              생활기록부를 분석해 학생의 강점과 진로 방향을 뽑아냅니다.
+              대입 상담에 바로 쓸 수 있는 컨설팅 초안을 만들어 줍니다.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/saengibu-analyzer/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
 
-        <article class="card card--emerald">
-          <div class="card__icon"><i class="fa-solid fa-chart-column"></i></div>
-          <h3 class="card__title">지필평가 분석</h3>
-          <p class="card__desc">
-            시험 종료 후 학생 성적과 문항 난이도·변별도를 자동 계산해
-            한눈에 파악하는 문항 분석 시스템.
-          </p>
-          <a class="card__btn" href="https://hong-jame.github.io/Education-data-analysis-report/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
-        </article>
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-signs-post"></i></div>
+            <h3 class="card__title">수시나비</h3>
+            <p class="card__desc">
+              4년제 수시 지원을 항목별로 시뮬레이션합니다.
+              학생에게 유리한 지원 조합을 찾도록 돕는 포트폴리오 상담 도구.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/saengibu-analyzer/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
 
-        <article class="card card--emerald">
-          <div class="card__icon"><i class="fa-solid fa-user-magnifying-glass"></i></div>
-          <h3 class="card__title">최성보 학생 찾기</h3>
-          <p class="card__desc">
-            NEIS 성적 데이터에서 찾고 싶은 학생을 바로 검색합니다.
-            성적과 지도가 필요한 항목을 한 화면에 모아 보여 줍니다.
-          </p>
-          <a class="card__btn" href="https://hong-jame.github.io/neis-low-score-filter/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
-        </article>
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-building-columns"></i></div>
+            <h3 class="card__title">전문대</h3>
+            <p class="card__desc">
+              학생 성적(등급)을 기준으로 전문대 수시 지원 전략을
+              안정·적정·소신·도전으로 매칭해 주는 진학 상담 도구.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/jeonmundae-counseling/index.html" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+        </div>
+      </div>
 
-        <article class="card card--emerald">
-          <div class="card__icon"><i class="fa-solid fa-compass"></i></div>
-          <h3 class="card__title">전문대 분석</h3>
-          <p class="card__desc">
-            학생 성적(등급)을 기준으로 전문대 수시 지원 전략을
-            안정·적정·소신·도전으로 매칭해 주는 진학 상담 도구.
-          </p>
-          <a class="card__btn" href="https://hong-jame.github.io/jeonmundae-counseling/index.html" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
-        </article>
+      <!-- 2. 학생 평가 -->
+      <div class="cat cat--blue">
+        <div class="cat-head">
+          <span class="tag"><i class="fa-solid fa-clipboard-list"></i></span>
+          <h3>학생 평가 <span class="en">Assessment</span></h3>
+          <span class="line"></span>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-chart-column"></i></div>
+            <h3 class="card__title">지필평가 분석</h3>
+            <p class="card__desc">
+              시험 종료 후 학생 성적과 문항 난이도·변별도를 자동 계산해
+              한눈에 파악하는 문항 분석 시스템.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/Education-data-analysis-report/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
 
-        <article class="card card--emerald">
-          <div class="card__icon"><i class="fa-solid fa-clipboard-check"></i></div>
-          <h3 class="card__title">생기부 점검</h3>
-          <p class="card__desc">
-            작성된 생활기록부의 글자 수·기재 규정·오류를 자동으로 점검해
-            수정이 필요한 항목을 빠르게 찾아 주는 도구.
-          </p>
-          <a class="card__btn" href="https://hong-jame.github.io/saengibu-checker/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
-        </article>
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
+            <h3 class="card__title">문항 히스토리 분석</h3>
+            <p class="card__desc">
+              여러 버전의 시험지를 한눈에 비교합니다. 비슷한 문항을
+              자동으로 짝지어 주고, 바뀐 부분은 단어 단위로 표시해 줍니다.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/munhang-history-viewer/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
 
-        <article class="card card--emerald">
-          <div class="card__icon"><i class="fa-solid fa-clock-rotate-left"></i></div>
-          <h3 class="card__title">문항 히스토리 분석</h3>
-          <p class="card__desc">
-            여러 버전의 시험지를 한눈에 비교합니다. 비슷한 문항을
-            자동으로 짝지어 주고, 바뀐 부분은 단어 단위로 표시해 줍니다.
-          </p>
-          <a class="card__btn" href="https://hong-jame.github.io/munhang-history-viewer/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
-        </article>
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-user-magnifying-glass"></i></div>
+            <h3 class="card__title">최성보 찾기</h3>
+            <p class="card__desc">
+              NEIS 성적 데이터에서 찾고 싶은 학생을 바로 검색합니다.
+              성적과 지도가 필요한 항목을 한 화면에 모아 보여 줍니다.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/neis-low-score-filter/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+        </div>
+      </div>
+
+      <!-- 3. 학교 업무 -->
+      <div class="cat cat--violet">
+        <div class="cat-head">
+          <span class="tag"><i class="fa-solid fa-list-check"></i></span>
+          <h3>학교 업무 <span class="en">School Affairs</span></h3>
+          <span class="line"></span>
+        </div>
+        <div class="grid grid--solo">
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-clipboard-check"></i></div>
+            <h3 class="card__title">생기부 점검기</h3>
+            <p class="card__desc">
+              작성된 생활기록부의 글자 수·기재 규정·오류를 자동으로 점검해
+              수정이 필요한 항목을 빠르게 찾아 줍니다.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/saengibu-checker/" target="_blank" rel="noopener">앱 실행하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+        </div>
       </div>
     </section>
 
-    <!-- Category 2: Student Learning -->
-    <section class="section reveal" style="animation-delay:0.16s">
-      <div class="section-head student">
-        <span class="tag"><i class="fa-solid fa-graduation-cap"></i></span>
+    <!-- ===================== 하단 존: 개인 · 학습 ===================== -->
+    <section class="reveal" style="animation-delay:0.12s">
+      <div class="zone-head">
+        <span class="zone-mark life"><i class="fa-solid fa-house-user"></i></span>
         <div>
-          <h2>학생 학습용</h2>
-          <p>Student Learning</p>
+          <h2>개인 · 학습</h2>
+          <span class="en">Learning &amp; Home</span>
         </div>
-        <span class="line"></span>
       </div>
 
-      <div class="grid">
-        <article class="card card--blue">
-          <div class="card__icon"><i class="fa-solid fa-fire-flame-simple"></i></div>
-          <h3 class="card__title">세포호흡</h3>
-          <p class="card__desc">
-            해당과정 → TCA 회로 → 전자전달계·화학삼투로 이어지는
-            에너지 대사 과정을 단계별로 조작하며 학습하는 인터랙티브 게임.
-          </p>
-          <a class="card__btn" href="https://hong-jame.github.io/cellular-respiration/" target="_blank" rel="noopener">학습 시작하기 <i class="fa-solid fa-arrow-right"></i></a>
-        </article>
+      <!-- 1. 학생용 -->
+      <div class="cat cat--cyan">
+        <div class="cat-head">
+          <span class="tag"><i class="fa-solid fa-flask"></i></span>
+          <h3>학생용 <span class="en">Student Learning</span></h3>
+          <span class="line"></span>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-fire-flame-simple"></i></div>
+            <h3 class="card__title">세포호흡</h3>
+            <p class="card__desc">
+              해당과정 → TCA 회로 → 전자전달계·화학삼투로 이어지는
+              에너지 대사 과정을 단계별로 조작하며 학습하는 인터랙티브 게임.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/cellular-respiration/" target="_blank" rel="noopener">학습 시작하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
 
-        <article class="card card--blue">
-          <div class="card__icon"><i class="fa-solid fa-leaf"></i></div>
-          <h3 class="card__title">광합성</h3>
-          <p class="card__desc">
-            명반응(광인산화·물의 광분해)과 암반응(캘빈 회로)의 물질·에너지
-            흐름을 시각적으로 조작하며 학습하는 인터랙티브 게임.
-          </p>
-          <a class="card__btn" href="https://hong-jame.github.io/photosynthesis/" target="_blank" rel="noopener">학습 시작하기 <i class="fa-solid fa-arrow-right"></i></a>
-        </article>
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-leaf"></i></div>
+            <h3 class="card__title">광합성</h3>
+            <p class="card__desc">
+              명반응(광인산화·물의 광분해)과 암반응(캘빈 회로)의 물질·에너지
+              흐름을 시각적으로 조작하며 학습하는 인터랙티브 게임.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/photosynthesis/" target="_blank" rel="noopener">학습 시작하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+        </div>
+      </div>
+
+      <!-- 2. 가정용 -->
+      <div class="cat cat--amber">
+        <div class="cat-head">
+          <span class="tag"><i class="fa-solid fa-house"></i></span>
+          <h3>가정용 <span class="en">Home</span></h3>
+          <span class="line"></span>
+        </div>
+        <div class="grid grid--solo">
+          <article class="card">
+            <div class="card__icon"><i class="fa-solid fa-language"></i></div>
+            <h3 class="card__title">영어단어</h3>
+            <p class="card__desc">
+              단어장과 워크북, 복습 게임으로 영어 단어를 재미있게
+              익히는 학습 도구.
+            </p>
+            <a class="card__btn" href="https://hong-jame.github.io/my-website_word/" target="_blank" rel="noopener">학습 시작하기 <i class="fa-solid fa-arrow-right"></i></a>
+          </article>
+        </div>
       </div>
     </section>
 
-    <footer class="reveal" style="animation-delay:0.24s">
+    <footer class="reveal" style="animation-delay:0.18s">
       <span>© 2026 EduLab · 21세기 교사를 위한 워크스페이스</span>
       <a href="#"><i class="fa-brands fa-github"></i>&nbsp; Hosted on GitHub Pages</a>
     </footer>
